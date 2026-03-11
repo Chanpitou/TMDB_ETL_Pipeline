@@ -5,7 +5,9 @@ from sqlalchemy import text
 from src.utils.constants import DB_SCHEMA_RAW ,DB_TABLE_RAW
 import json
 import logging
+from dotenv import load_dotenv
 
+load_dotenv()
 logging.basicConfig(format='%(asctime)s: %(levelname)s - %(message)s', level=logging.INFO)
 
 db_schema = DB_SCHEMA_RAW
