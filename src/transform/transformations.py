@@ -64,11 +64,11 @@ def transform_crew_data(df):
                                  meta="id",
                                  meta_prefix="movie_")
     # DIM_CREW_PEOPLE: unique crew from all movies
-    dim_cast_people = crew_raw[['crew_id', 'crew_name', 'crew_gender', 'crew_popularity']].drop_duplicates(subset=['crew_id'])
+    dim_crew_people = crew_raw[['crew_id', 'crew_name', 'crew_gender', 'crew_popularity']].drop_duplicates(subset=['crew_id'])
 
     # FACT_CREW: The relationship between movie and crew
     fact_crew = crew_raw[["movie_id", "crew_id", "crew_job", "crew_department"]].copy()
-    return dim_cast_people, fact_crew
+    return dim_crew_people, fact_crew
 
 def transform_genre_data(df):
     genre_raw = pd.json_normalize(df["data"],
@@ -90,9 +90,3 @@ if __name__ == "__main__":
     dim_genre, fact_movie_genres = transform_genre_data(raw_df)
 
     print(dim_genre)
-    # dim_movies = transform_dim_movies(raw_df)
-    # fact_finance = transform_fact_finance(raw_df)
-    # print(dim_movies)
-    # print(fact_finance)
-
-
