@@ -49,11 +49,13 @@ def transform_cast_data(df):
                                  meta="id",
                                  meta_prefix="movie_")
 
-    # DIM_PEOPLE: unique cast from all the movies
+    # DIM_PEOPLE: unique cast from all the movies, to be merge into dim_people
     dim_cast_people = cast_raw[['cast_id', 'cast_name', 'cast_gender', 'cast_popularity']].drop_duplicates(subset=['cast_id']).copy()
+    dim_cast_people.columns = ['id', 'name', 'gender', 'popularity']
 
     # FACT_CAST: The relationship between movie and actor
     fact_cast = cast_raw[['movie_id', 'cast_id', 'cast_character', 'cast_order']].copy()
+    fact_cast.rename(columns={'cast_id':'person_id', 'cast_character':'character'}, inplace=True)
 
     return dim_cast_people, fact_cast
 
@@ -63,11 +65,13 @@ def transform_crew_data(df):
                                  record_prefix="crew_",
                                  meta="id",
                                  meta_prefix="movie_")
-    # DIM_CREW_PEOPLE: unique crew from all movies
+    # DIM_CREW_PEOPLE: unique crew from all movies, to be merge into dim_people
     dim_crew_people = crew_raw[['crew_id', 'crew_name', 'crew_gender', 'crew_popularity']].drop_duplicates(subset=['crew_id'])
+    dim_crew_people.columns = ['id', 'name', 'gender', 'popularity']
 
     # FACT_CREW: The relationship between movie and crew
     fact_crew = crew_raw[["movie_id", "crew_id", "crew_job", "crew_department"]].copy()
+    fact_crew.rename(columns={'crew_id':'person_id', 'crew_job': 'job_title', 'crew_department':'department'}, inplace=True)
     return dim_crew_people, fact_crew
 
 def transform_genre_data(df):
@@ -79,14 +83,16 @@ def transform_genre_data(df):
     # DIM_GENRES: Unique genre names
     dim_genre = genre_raw[['genre_id', 'genre_name']].drop_duplicates(subset=['genre_id']).copy()
 
-    # BRIDGE: Link movies to genres
-    fact_movie_genres = genre_raw[['movie_id', 'genre_id']].copy()
-    return dim_genre, fact_movie_genres
+    # # FACT_MOVIE_GENRES: Each movie genre
+    # fact_movie_genres = genre_raw[['movie_id', 'genre_id']].copy()
+    return dim_genre
 
 if __name__ == "__main__":
     raw_df = fetch_json_data()
+
+    dim_movies = transform_dim_movies(raw_df)
+    fact_finance = transform_fact_finance(raw_df)
     dim_cast_people, fact_cast = transform_cast_data(raw_df)
     dim_crew_people, fact_crew = transform_crew_data(raw_df)
-    dim_genre, fact_movie_genres = transform_genre_data(raw_df)
-
+    dim_genre = transform_genre_data(raw_df)
     print(dim_genre)
