@@ -1,0 +1,38 @@
+[2026-03-17T05:59:20.046+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb manual__2026-03-17T05:59:17.947602+00:00 [queued]>
+[2026-03-17T05:59:20.052+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb manual__2026-03-17T05:59:17.947602+00:00 [queued]>
+[2026-03-17T05:59:20.053+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-03-17T05:59:20.064+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): extract_from_tmdb> on 2026-03-17 05:59:17.947602+00:00
+[2026-03-17T05:59:20.072+0000] {standard_task_runner.py:60} INFO - Started process 648 to run task
+[2026-03-17T05:59:20.076+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tmdb_snowflake_pipeline', 'extract_from_tmdb', 'manual__2026-03-17T05:59:17.947602+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/tmdb_etl_dag.py', '--cfg-path', '/tmp/tmpk3spq4_7']
+[2026-03-17T05:59:20.079+0000] {standard_task_runner.py:88} INFO - Job 11: Subtask extract_from_tmdb
+[2026-03-17T05:59:20.136+0000] {task_command.py:423} INFO - Running <TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb manual__2026-03-17T05:59:17.947602+00:00 [running]> on host 8e918576c6b6
+[2026-03-17T05:59:20.224+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='chanpitou' AIRFLOW_CTX_DAG_ID='tmdb_snowflake_pipeline' AIRFLOW_CTX_TASK_ID='extract_from_tmdb' AIRFLOW_CTX_EXECUTION_DATE='2026-03-17T05:59:17.947602+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-03-17T05:59:17.947602+00:00'
+[2026-03-17T05:59:20.225+0000] {tmdb_etl_dag.py:32} INFO - Starting TMDB ETL Pipeline
+[2026-03-17T05:59:20.226+0000] {tmdb_etl_dag.py:33} INFO - ------------------ Begin data extraction ------------------
+[2026-03-17T05:59:20.841+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 1
+[2026-03-17T05:59:21.242+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 2
+[2026-03-17T05:59:21.587+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 3
+[2026-03-17T05:59:22.002+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 4
+[2026-03-17T05:59:22.343+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 5
+[2026-03-17T05:59:22.697+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 6
+[2026-03-17T05:59:23.016+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 7
+[2026-03-17T05:59:23.369+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 8
+[2026-03-17T05:59:23.719+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 9
+[2026-03-17T05:59:24.025+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 10
+[2026-03-17T05:59:24.026+0000] {extract_api_data.py:33} INFO - Found 200 movies, begin collecting details and credits of each movie
+[2026-03-17T06:00:46.779+0000] {extract_api_data.py:60} INFO - Saving json data to /opt/***/data/enriched_movies.json
+[2026-03-17T06:00:47.516+0000] {tmdb_etl_dag.py:39} INFO - Loading raw movie data to postgres stage
+[2026-03-17T06:00:47.517+0000] {db_utils.py:26} INFO - Connection to PostgreSQL successful
+[2026-03-17T06:00:47.659+0000] {db_utils.py:47} INFO - Executing upsert query
+[2026-03-17T06:00:47.661+0000] {logging_mixin.py:188} INFO - 
+            INSERT INTO stage.tmdb_movies_raw (tmdb_id, data)
+            VALUES (:tmdb_id, :data)
+            ON CONFLICT (tmdb_id) 
+            DO UPDATE SET data = EXCLUDED.data, extracted_at = CURRENT_TIMESTAMP;;
+        
+[2026-03-17T06:00:48.224+0000] {db_utils.py:51} INFO - Upsert query successful
+[2026-03-17T06:00:48.225+0000] {tmdb_etl_dag.py:41} INFO - ------------------ End data extraction ------------------
+[2026-03-17T06:00:48.232+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-03-17T06:00:48.242+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tmdb_snowflake_pipeline, task_id=extract_from_tmdb, execution_date=20260317T055917, start_date=20260317T055920, end_date=20260317T060048
+[2026-03-17T06:00:48.287+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-03-17T06:00:48.305+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

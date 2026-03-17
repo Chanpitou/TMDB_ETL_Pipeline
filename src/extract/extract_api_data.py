@@ -54,9 +54,9 @@ class TMDBClient:
     #     response = requests.get(url, params=params)
     #     return response.json()
 
-    def save_to_json(self, json_data, filename) -> None:
-        file_path = f"C:/Users/umcha/OneDrive/Desktop/Data_Workstation/TMDB_ETL_Pipeline/data/{filename}"
+    def save_to_json(self, json_data, filepath) -> None:
 
-        with open(file_path, "w") as file:
-            logging.info(f"Saving json data to {file_path}")
+        with open(filepath, "w") as file:
+            logging.info(f"Saving json data to {filepath}")
             json.dump(json_data, file, indent=4)
+

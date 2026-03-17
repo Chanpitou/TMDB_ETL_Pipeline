@@ -1,0 +1,70 @@
+[2026-03-17T03:38:14.600+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [queued]>
+[2026-03-17T03:38:14.606+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [queued]>
+[2026-03-17T03:38:14.607+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2026-03-17T03:38:14.619+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): extract_from_tmdb> on 2026-03-16 00:00:00+00:00
+[2026-03-17T03:38:14.629+0000] {standard_task_runner.py:60} INFO - Started process 234 to run task
+[2026-03-17T03:38:14.633+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tmdb_snowflake_pipeline', 'extract_from_tmdb', 'scheduled__2026-03-16T00:00:00+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/tmdb_etl_dag.py', '--cfg-path', '/tmp/tmpjz2d6fwj']
+[2026-03-17T03:38:14.636+0000] {standard_task_runner.py:88} INFO - Job 10: Subtask extract_from_tmdb
+[2026-03-17T03:38:14.696+0000] {task_command.py:423} INFO - Running <TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [running]> on host 36f3bf3676b0
+[2026-03-17T03:38:14.777+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='chanpitou' AIRFLOW_CTX_DAG_ID='tmdb_snowflake_pipeline' AIRFLOW_CTX_TASK_ID='extract_from_tmdb' AIRFLOW_CTX_EXECUTION_DATE='2026-03-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-16T00:00:00+00:00'
+[2026-03-17T03:38:15.373+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 1
+[2026-03-17T03:38:15.682+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 2
+[2026-03-17T03:38:16.086+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 3
+[2026-03-17T03:38:16.461+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 4
+[2026-03-17T03:38:16.880+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 5
+[2026-03-17T03:38:16.881+0000] {extract_api_data.py:33} INFO - Found 100 movies, begin collecting details and credits of each movie
+[2026-03-17T03:38:55.711+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/tmdb_etl_dag.py", line 26, in run_extraction
+    client.save_to_json(movies, "/opt/airflow/data/enriched_movies.json")
+  File "/opt/airflow/src/extract/extract_api_data.py", line 60, in save_to_json
+    with open(file_path, "w") as file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:/Users/umcha/OneDrive/Desktop/Data_Workstation/TMDB_ETL_Pipeline/data//opt/airflow/data/enriched_movies.json'
+[2026-03-17T03:38:55.731+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=tmdb_snowflake_pipeline, task_id=extract_from_tmdb, execution_date=20260316T000000, start_date=20260317T033814, end_date=20260317T033855
+[2026-03-17T03:38:55.740+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 10 for task extract_from_tmdb ([Errno 2] No such file or directory: 'C:/Users/umcha/OneDrive/Desktop/Data_Workstation/TMDB_ETL_Pipeline/data//opt/airflow/data/enriched_movies.json'; 234)
+[2026-03-17T03:38:55.786+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-03-17T03:38:55.804+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-03-17T05:03:13.238+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [queued]>
+[2026-03-17T05:03:13.248+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [queued]>
+[2026-03-17T05:03:13.249+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2026-03-17T05:03:13.262+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): extract_from_tmdb> on 2026-03-16 00:00:00+00:00
+[2026-03-17T05:03:13.273+0000] {standard_task_runner.py:60} INFO - Started process 300 to run task
+[2026-03-17T05:03:13.277+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tmdb_snowflake_pipeline', 'extract_from_tmdb', 'scheduled__2026-03-16T00:00:00+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/tmdb_etl_dag.py', '--cfg-path', '/tmp/tmpvu7sv0gi']
+[2026-03-17T05:03:13.281+0000] {standard_task_runner.py:88} INFO - Job 5: Subtask extract_from_tmdb
+[2026-03-17T05:03:13.362+0000] {task_command.py:423} INFO - Running <TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [running]> on host 5dfd1533d1bc
+[2026-03-17T05:03:13.455+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='chanpitou' AIRFLOW_CTX_DAG_ID='tmdb_snowflake_pipeline' AIRFLOW_CTX_TASK_ID='extract_from_tmdb' AIRFLOW_CTX_EXECUTION_DATE='2026-03-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-16T00:00:00+00:00'
+[2026-03-17T05:03:13.826+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 1
+[2026-03-17T05:03:14.239+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 2
+[2026-03-17T05:03:14.240+0000] {extract_api_data.py:33} INFO - Found 40 movies, begin collecting details and credits of each movie
+[2026-03-17T05:03:28.034+0000] {extract_api_data.py:60} INFO - Saving json data to /opt/***/data/enriched_movies.json
+[2026-03-17T05:03:28.176+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-03-17T05:03:28.187+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tmdb_snowflake_pipeline, task_id=extract_from_tmdb, execution_date=20260316T000000, start_date=20260317T050313, end_date=20260317T050328
+[2026-03-17T05:03:28.241+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-03-17T05:03:28.260+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-03-17T05:35:27.296+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [queued]>
+[2026-03-17T05:35:27.303+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [queued]>
+[2026-03-17T05:35:27.303+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-03-17T05:35:27.313+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): extract_from_tmdb> on 2026-03-16 00:00:00+00:00
+[2026-03-17T05:35:27.323+0000] {standard_task_runner.py:60} INFO - Started process 257 to run task
+[2026-03-17T05:35:27.327+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tmdb_snowflake_pipeline', 'extract_from_tmdb', 'scheduled__2026-03-16T00:00:00+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/tmdb_etl_dag.py', '--cfg-path', '/tmp/tmph4bctxh2']
+[2026-03-17T05:35:27.331+0000] {standard_task_runner.py:88} INFO - Job 4: Subtask extract_from_tmdb
+[2026-03-17T05:35:27.392+0000] {task_command.py:423} INFO - Running <TaskInstance: tmdb_snowflake_pipeline.extract_from_tmdb scheduled__2026-03-16T00:00:00+00:00 [running]> on host 8e918576c6b6
+[2026-03-17T05:35:27.469+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='chanpitou' AIRFLOW_CTX_DAG_ID='tmdb_snowflake_pipeline' AIRFLOW_CTX_TASK_ID='extract_from_tmdb' AIRFLOW_CTX_EXECUTION_DATE='2026-03-16T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-03-16T00:00:00+00:00'
+[2026-03-17T05:35:27.949+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 1
+[2026-03-17T05:35:28.377+0000] {extract_api_data.py:28} INFO - Collecting movies ids from page 2
+[2026-03-17T05:35:28.378+0000] {extract_api_data.py:33} INFO - Found 40 movies, begin collecting details and credits of each movie
+[2026-03-17T05:35:45.061+0000] {extract_api_data.py:60} INFO - Saving json data to /opt/***/data/enriched_movies.json
+[2026-03-17T05:35:45.191+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-03-17T05:35:45.201+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tmdb_snowflake_pipeline, task_id=extract_from_tmdb, execution_date=20260316T000000, start_date=20260317T053527, end_date=20260317T053545
+[2026-03-17T05:35:45.257+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-03-17T05:35:45.275+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

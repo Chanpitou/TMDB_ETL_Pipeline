@@ -16,12 +16,12 @@ db_table = DB_TABLE_RAW
 def connect_to_db():
     user = os.getenv("POSTGRES_USER")
     password = os.getenv("POSTGRES_PASSWORD")
-    host = os.getenv("POSTGRES_HOST")
+    host = os.getenv("POSTGRES_HOST", "host.docker.internal")
     port = os.getenv("POSTGRES_PORT")
     db = os.getenv("POSTGRES_DB")
 
     try:
-        connection_uri = f"postgresql://{user}:{password}@{host}:{port}/{db}"
+        connection_uri = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}"
         db_engine = sqlalchemy.create_engine(connection_uri)
         logging.info("Connection to PostgreSQL successful")
         return db_engine
@@ -47,7 +47,7 @@ def load_json_data(json_data):
         logging.info("Executing upsert query")
         print(upsert_query)
         conn.execute(upsert_query, params)
-        conn.commit()
+        # conn.commit()
         logging.info("Upsert query successful")
 
 

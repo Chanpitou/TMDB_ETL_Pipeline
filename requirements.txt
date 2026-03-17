@@ -1,16 +1,9 @@
-# Extraction & Config
 requests
-#pyyaml
 python-dotenv
 
-# Database Connectors
-psycopg2
-#snowflake-connector-python[pandas]
+psycopg2-binary
+snowflake-connector-python[pandas]
 sqlalchemy
 
-# Transformation
-#pandas
-# pyspark  <-- Uncomment if you want to use Spark instead of Pandas
-
-# Orchestration
-#apache-airflow
+pandas
+apache-airflow
