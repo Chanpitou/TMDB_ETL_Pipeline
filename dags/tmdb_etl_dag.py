@@ -6,8 +6,6 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 import logging
 
-from babel.util import PYTHON_FUTURE_IMPORT_re
-
 # Allowing Airflow to find 'src' folder
 sys.path.append('/opt/airflow')
 
