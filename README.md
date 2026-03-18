@@ -7,54 +7,6 @@ An automated, containerized ETL pipeline that extracts enriched movie data from 
 ## Project Overview
 This project demonstrates a production-grade data engineering workflow. It handles complex JSON nested data, implements robust data transformations using Pandas, and ensures environment consistency using Docker.
 
-    ```mermaid
-    graph TD
-    subgraph External_Sources [External Data]
-        TMDB[TMDB API]
-    end
-
-    subgraph Docker_Container [Docker Environment: Airflow Standalone]
-        direction TB
-        DAG[Airflow DAG: tmdb_snowflake_pipeline]
-        
-        subgraph Tasks [Airflow Tasks]
-            T1[Task: run_extraction]
-            T2[Task: run_transformation_load_to_snowflake]
-        end
-        
-        VOL[(Local Volume: /data)]
-        ENV[.env File]
-    end
-
-    subgraph Host_Machine [Local Host: Windows/Mac]
-        PG[(PostgreSQL: tmdb_staging)]
-    end
-
-    subgraph Cloud_Warehouse [Cloud: Snowflake]
-        subgraph Star_Schema [Star Schema]
-            F1[FACT_MOVIE_FINANCE]
-            F2[FACT_CAST / FACT_CREW]
-            D1[DIM_MOVIES]
-            D2[DIM_PEOPLE]
-            D3[DIM_GENRES]
-        end
-    end
-
-    %% Data Flow Connections
-    TMDB -- "1. Requests (JSON)" --> T1
-    T1 -- "2. Save Raw JSON" --> VOL
-    T1 -- "3. host.docker.internal" --> PG
-    
-    PG -- "4. Fetch Raw Data" --> T2
-    T2 -- "5. Pandas Cleaning & Modeling" --> T2
-    T2 -- "6. write_pandas()" --> Cloud_Warehouse
-
-    %% Styling
-    style Docker_Container fill:#f9f,stroke:#333,stroke-width:2px
-    style Host_Machine fill:#bbf,stroke:#333,stroke-width:2px
-    style Cloud_Warehouse fill:#dfd,stroke:#333,stroke-width:2px
-    style TMDB fill:#fff,stroke:#333,stroke-dasharray: 5 5```
-
 ### Key Features
 * **Orchestration:** Apache Airflow manages task dependencies and scheduling.
 * **Containerization:** The entire orchestration layer is isolated via Docker.
