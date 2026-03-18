@@ -1,3 +1,5 @@
+.idea/
 data/
 etl_venv/
 .env
+.logs/
